@@ -15,12 +15,21 @@
                   <li class="nav-item">
                     <a class="nav-link" href="#">Чат</a>
                   </li>
+                  {%if request.user.is_authenticated %}
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Мой аккаунт</a>
+                    <a class="nav-link" href="#">@{{request.user.username}}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Мой аккаунт</a>
+                    <a class="nav-link" href="{%url 'logout'%}">Выйти</a>
                   </li>
+                  {%else%}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{%url 'register'%}">Регистрация</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="{%url 'login'%}">Войти</a>
+                  </li>
+                  {%endif%}
                 </ul>
                 <form class="d-flex">
                   <input class="form-control me-2" type="search" placeholder="Поиск...  " aria-label="Search">

@@ -13,8 +13,18 @@ def register(request):
             user = User.objects.create(username=username, profile_image=profile_image)
             user.set_password(password)
             user.save()
-            user = User.objects.get(username = username, password = password)
+            user = User.objects.get(username = username)
             user = authenticate(username=username, password=password)
             login(request, user)
             return redirect("index")
     return render(request, 'register.html')
+
+def user_login(request):
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = User.objects.get(username = username)
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return redirect("index")
+    return render(request, "sign-in.html")
