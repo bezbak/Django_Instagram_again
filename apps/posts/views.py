@@ -16,5 +16,5 @@ def create_post(request):
         if request.user.is_authenticated:
             post = Posts.objects.create(image = image, description = descr, post_user = request.user)
             post.save()
-            redirect("index")
+            return redirect("index")
     return render(request, "create_post.html")
