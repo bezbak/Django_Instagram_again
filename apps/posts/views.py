@@ -18,3 +18,10 @@ def create_post(request):
             post.save()
             return redirect("index")
     return render(request, "create_post.html")
+
+def post_detail(request, id):
+    post = Posts.objects.get(id = id)
+    context = {
+        "post":post
+    }
+    return render(request, "comment.html", context)
