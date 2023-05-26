@@ -25,3 +25,21 @@ def post_detail(request, id):
         "post":post
     }
     return render(request, "comment.html", context)
+
+def post_update(request, id):
+    post = Posts.objects.get(id = id)
+    if request.method == 'POST':
+        description = request.POST.get("descr")
+        image = request.FILES.get('image')
+        if image:
+            post.description = description
+            post.image = image
+            post.save()
+        else:
+            post.description = description
+            post.save()
+        return redirect('post_detail', post.id)
+    context = {
+        "post":post
+    }
+    return render(request, "update_post.html", context)
