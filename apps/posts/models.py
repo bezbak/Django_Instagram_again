@@ -16,3 +16,15 @@ class Posts(models.Model):
     created = models.DateTimeField(
         auto_now_add=True
     )
+
+class Like(models.Model):
+    post = models.ForeignKey(
+        Posts,
+        related_name='likes',
+        on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        User,
+        related_name="likes",
+        on_delete=models.CASCADE
+    )

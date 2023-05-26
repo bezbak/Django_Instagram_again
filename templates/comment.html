@@ -17,7 +17,9 @@
                       <button type="button" class="btn btn-sm btn-outline-secondary">12 Like</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">2 Comment</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">@{{post.post_user.username}}</button>
+                      {%if request.user == post.post_user%}
                       <a href="{%url 'post_update' post.id%}" class="btn btn-sm btn-outline-primary">Обновить пост</a>
+                      {%endif%}
                     </div>
                     <small class="text-muted">{{post.created|date:"M d, Y H:i"}}</small>
                   </div>
