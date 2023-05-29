@@ -3,7 +3,7 @@ from apps.posts.models import Posts, Like, Comment
 # Create your views here.
 
 def index(request):
-    posts = Posts.objects.all()
+    posts = Posts.objects.all().order_by('-created')
     if request.method == "POST":
         post_id = request.POST.get('post_id')
         if request.user.is_authenticated:
@@ -69,3 +69,13 @@ def post_update(request, id):
         "post":post
     }
     return render(request, "update_post.html", context)
+
+def post_del(request, id):
+    post = Posts.objects.get(id=id)
+    if request.method == "POST":
+        post.delete()
+        return redirect('index')
+    context = {
+        'post':post
+    }
+    return render(request, 'delete_post.html', context)

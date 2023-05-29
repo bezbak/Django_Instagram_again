@@ -19,7 +19,7 @@
                         <input name="post_id" type="hidden" value="{{post.id}}">
                         <button type="submit" class="btn btn-sm btn-outline-secondary">{{post.likes.count}} Like</button>
                       </form>
-                      <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{%url 'post_detail' post.id%}"> 2 Comment</a></button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary"><a href="{%url 'post_detail' post.id%}"> {{post.comment.count}} Comment</a></button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">@{{post.post_user.username}}</button>
                     </div>
                     <small class="text-muted">{{post.created|date:"M d, Y H:i"}}</small>
