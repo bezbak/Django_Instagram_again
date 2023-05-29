@@ -28,3 +28,28 @@ class Like(models.Model):
         related_name="likes",
         on_delete=models.CASCADE
     )
+    
+class Comment(models.Model):
+    text = models.CharField(
+        max_length=255
+    )
+    post = models.ForeignKey(
+        Posts,
+        related_name='comment',
+        on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        User,
+        related_name="comment",
+        on_delete=models.CASCADE
+    )
+    created = models.DateTimeField(
+        auto_now_add=True
+    )
+    parent = models.ForeignKey(
+        'self',
+        related_name="child",
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True
+    )

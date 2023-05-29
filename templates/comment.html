@@ -14,7 +14,10 @@
                   <p class="card-text " style="width: 500px; margin: 15px 0;">{{post.description}}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">12 Like</button>
+                      <form method="POST" action="">
+                        {%csrf_token%} 
+                        <button name="like" type="submit" class="btn btn-sm btn-outline-secondary">{{post.likes.count}} Like</button>
+                      </form>
                       <button type="button" class="btn btn-sm btn-outline-secondary">2 Comment</button>
                       <button type="button" class="btn btn-sm btn-outline-secondary">@{{post.post_user.username}}</button>
                       {%if request.user == post.post_user%}
@@ -33,31 +36,12 @@
         <div class="container">
     
           <div style="display: flex; justify-content:center;" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
-            <div class="col-8">
-              <div class="card shadow-sm">
-                <div class="flex_comm">
-                    <svg style="width: 100px; margin-right:15px;" class="bd-placeholder-img card-img-top" width="100%" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"> <rect width="100%" height="100%" fill="#55595c"></rect></svg>
-                    <p class="card-text " style="width: 500px; margin: 15px 0;">This is a wider card with supporting text below as a natural lead-awdawdadajbe    in to additional content. This content is a little bit longer.</p>
-                </div>
-                
-    
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">12 Like</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">2 Ответы</button>
-                      <button type="button" class="btn btn-sm btn-outline-secondary">@accaunt</button>
-                    </div>
-                    <small class="text-muted">9 mins</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-8">
+            {%for comment in post.comment.all|slice:"::-1"%}
+              <div class="col-8">
                 <div class="card shadow-sm">
                   <div class="flex_comm">
                       <svg style="width: 100px; margin-right:15px;" class="bd-placeholder-img card-img-top" width="100%" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"> <rect width="100%" height="100%" fill="#55595c"></rect></svg>
-                      <p class="card-text " style="width: 500px; margin: 15px 0;">This is a wider card with supporting text below as a natural lead-awdawdadajbe    in to additional content. This content is a little bit longer.</p>
+                      <p class="card-text " style="width: 500px; margin: 15px 0;">{{comment.text}}</p>
                   </div>
                   
       
@@ -66,22 +50,26 @@
                       <div class="btn-group">
                         <button type="button" class="btn btn-sm btn-outline-secondary">12 Like</button>
                         <button type="button" class="btn btn-sm btn-outline-secondary">2 Ответы</button>
-                        <button type="button" class="btn btn-sm btn-outline-secondary">@accaunt</button>
+                        <button type="button" class="btn btn-sm btn-outline-secondary">@{{comment.user.username}}</button>
                       </div>
-                      <small class="text-muted">9 mins</small>
+                      <small class="text-muted">{{comment.created|date:"M d, Y H:i"}}</small>
                     </div>
                   </div>
                 </div>
               </div>
+            {%endfor%}
+            
           </div>
         </div>
       </div>
       <div class="comment  bg-light">
         <div class="container">
-      <form class="d-flex">
-        <textarea style="resize:none; height:100px;" class="form-control me-4" type="search" placeholder="Комментарий..  " aria-label="Search"></textarea>
-        <button style="height: 50px;" class="btn btn-outline-success" type="submit">Ответить</button>
-      </form></div>
+          <form method="POST" class="d-flex">
+            {%csrf_token%}
+            <textarea name="text" style="resize:none; height:100px;" class="form-control me-4" type="search" placeholder="Комментарий..." aria-label="Search"></textarea>
+            <button name="comment" style="height: 50px;" class="btn btn-outline-success" type="submit">Ответить</button>
+        </form>
+      </div>
     </div>
     {%include "includes/footer.html"%}
 {%endblock%}
