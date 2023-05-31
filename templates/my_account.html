@@ -8,46 +8,34 @@
           <div class="row row-cols-1 row-cols-sm-2 row-cols-md-1 g-3">
             <div class="top">
               <ul class="info_bar">
-                <li class=""><img class="acc-logo" src="https://i.pinimg.com/474x/e0/4a/a3/e04aa3fbb6112439f8c5a0d02c5e5722.jpg" alt=""></li>
-                <li class="info_el"><h5 class="text-5">232</h5><p class="text">Публикации</p></li>
+                <li class=""><img class="acc-logo" src="{{user.profile_image.url}}" alt=""></li>
+                <li class="info_el"><h5 class="text-5">{{user.post_user.count}}</h5><p class="text">Публикации</p></li>
                 <li class="info_el"><h5 class="text-5">232</h5><p class="text">Подписчики</p></li>
                 <li class="info_el"><h5 class="text-5">232</h5><p class="text">Подписки</p></li>
               </ul>
               <div class="simple_padding">
-                <h2 class="name">iustitia</h2>
-                <p class="description">Programmer</p>
+                <h2 class="name">{{user.username}}</h2>
+                <p class="description">{{user.description}}</p>
                 <a href="www.youtube.com" class="info_link">www.youtube.com</a>
               </div>
-              <button class="btn btn-outline-primary">Редактировать профиль</button>
+              {%if request.user == user%}
+                <a href="{%url 'profile_update' user.username%}" class="btn btn-outline-primary">Редактировать профиль</a>
+              {%else%}
+                <button class="btn btn-outline-primary">Подписаться</button>
+              {%endif%}
             </div>
           </div>
           <div class="row simple_padding row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             <h4 class="col-12 flex-center">Все публикации</h4>
             <div style="width: 100%;" class=" row row-cols-1 row-cols-sm-2 row-cols-md-4 g-1">
-              <div class="col">
-                <div class="card shadow-sm">
-                  <a class="post_link" href="">
-                  <img class="bd-placeholder-img card-img-top" width="100%" height="50%" src="https://i.pinimg.com/474x/e0/4a/a3/e04aa3fbb6112439f8c5a0d02c5e5722.jpg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></img></a>
+              {%for post in user.post_user.all%}
+                <div class="col">
+                  <div class="card shadow-sm">
+                    <a class="post_link" href="{%url 'post_detail' post.id%}">
+                    <img class="bd-placeholder-img card-img-top" width="100%" height="50%" src="{{post.image.url}}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"/></a>
+                  </div>
                 </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <a class="post_link" href="">
-                  <img class="bd-placeholder-img card-img-top" width="100%" height="50%" src="https://i.pinimg.com/474x/e0/4a/a3/e04aa3fbb6112439f8c5a0d02c5e5722.jpg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></img></a>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <a class="post_link" href="">
-                  <img class="bd-placeholder-img card-img-top" width="100%" height="50%" src="https://i.pinimg.com/474x/e0/4a/a3/e04aa3fbb6112439f8c5a0d02c5e5722.jpg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></img></a>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card shadow-sm">
-                  <a class="post_link" href="">
-                  <img class="bd-placeholder-img card-img-top" width="100%" height="50%" src="https://i.pinimg.com/474x/e0/4a/a3/e04aa3fbb6112439f8c5a0d02c5e5722.jpg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"></img></a>
-                </div>
-              </div>
+              {%endfor%}
             </div>
           </div>
         </div>

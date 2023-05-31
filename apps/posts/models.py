@@ -53,3 +53,15 @@ class Comment(models.Model):
         blank=True,
         null=True
     )
+    
+class CommentLike(models.Model):
+    user = models.ForeignKey(
+        User,
+        related_name="comm_likes",
+        on_delete=models.CASCADE
+    )
+    comment = models.ForeignKey(
+        Comment,
+        on_delete=models.CASCADE,
+        related_name='likes'
+    )

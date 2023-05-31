@@ -5,3 +5,8 @@ class User(AbstractUser):
     profile_image = models.ImageField(
         upload_to="profile_images/"
     )
+    description = models.CharField(
+        max_length=555,
+        blank=True,
+        null=True
+    )

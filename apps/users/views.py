@@ -35,3 +35,27 @@ def profile(request, username):
         'user':user
     }
     return render(request, 'my_account.html', context)
+
+def profile_update(request, username):
+    user = User.objects.get(username = username)
+    if request.user != user:
+        return redirect('index')
+    if request.method == "POST":
+        username = request.POST.get('username')
+        description = request.POST.get('description')
+        profile_image = request.POST.get('profile_image')
+        if profile_image:
+            user.username = username
+            user.description = description
+            user.profile_image = profile_image
+            user.save()
+            return redirect('profile', user.username)
+        else:
+            user.username = username
+            user.description = description
+            user.save()
+            return redirect('profile', user.username)
+    context = {
+        'user':user
+    }
+    return render(request, 'update_profile.html', context)
