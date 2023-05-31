@@ -10,8 +10,8 @@
               <ul class="info_bar">
                 <li class=""><img class="acc-logo" src="{{user.profile_image.url}}" alt=""></li>
                 <li class="info_el"><h5 class="text-5">{{user.post_user.count}}</h5><p class="text">Публикации</p></li>
-                <li class="info_el"><h5 class="text-5">232</h5><p class="text">Подписчики</p></li>
-                <li class="info_el"><h5 class="text-5">232</h5><p class="text">Подписки</p></li>
+                <li class="info_el"><h5 class="text-5">{{user.followers.count}}</h5><p class="text">Подписчики</p></li>
+                <li class="info_el"><h5 class="text-5">{{user.follows.count}}</h5><p class="text">Подписки</p></li>
               </ul>
               <div class="simple_padding">
                 <h2 class="name">{{user.username}}</h2>
@@ -21,7 +21,14 @@
               {%if request.user == user%}
                 <a href="{%url 'profile_update' user.username%}" class="btn btn-outline-primary">Редактировать профиль</a>
               {%else%}
-                <button class="btn btn-outline-primary">Подписаться</button>
+                <form method="POST">
+                  {%csrf_token%}
+                  {%if follow_status%}
+                    <button class="btn btn-outline-danger">Отписаться</button>
+                  {%else%}
+                    <button class="btn btn-outline-primary">Подписаться</button>
+                  {%endif%}
+                </form>
               {%endif%}
             </div>
           </div>

@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
-from .models import User
+from .models import User, Follow
 # Create your views here.
 
 def register(request):
@@ -31,8 +31,18 @@ def user_login(request):
 
 def profile(request, username):
     user = User.objects.get(username = username)
+    follow_status = Follow.objects.filter(from_user = request.user, to_user = user).exists()
+    if request.method == "POST":
+        try:
+            follower = Follow.objects.get(from_user = request.user, to_user = user)
+            follower.delete()
+            return redirect('profile', user.username)
+        except:
+            follower = Follow.objects.create(from_user = request.user, to_user = user)
+            return redirect('profile', user.username)
     context = {
-        'user':user
+        'user':user,
+        'follow_status':follow_status
     }
     return render(request, 'my_account.html', context)
 
@@ -43,7 +53,7 @@ def profile_update(request, username):
     if request.method == "POST":
         username = request.POST.get('username')
         description = request.POST.get('description')
-        profile_image = request.POST.get('profile_image')
+        profile_image = request.FILES.get('profile_image')
         if profile_image:
             user.username = username
             user.description = description
