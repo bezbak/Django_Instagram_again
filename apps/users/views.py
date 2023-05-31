@@ -28,3 +28,10 @@ def user_login(request):
         login(request, user)
         return redirect("index")
     return render(request, "sign-in.html")
+
+def profile(request, username):
+    user = User.objects.get(username = username)
+    context = {
+        'user':user
+    }
+    return render(request, 'my_account.html', context)

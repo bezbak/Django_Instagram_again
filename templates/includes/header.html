@@ -17,7 +17,7 @@
                   </li>
                   {%if request.user.is_authenticated %}
                   <li class="nav-item">
-                    <a class="nav-link" href="#">@{{request.user.username}}</a>
+                    <a class="nav-link" href="{%url 'profile' request.user.username%}">@{{request.user.username}}</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="{%url 'logout'%}">Выйти</a>
