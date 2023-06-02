@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.db.models import Q
 from apps.posts.models import Posts, Like, Comment
 from apps.users.models import User, Follow
 # Create your views here.
@@ -91,5 +92,16 @@ def post_del(request, id):
     }
     return render(request, 'delete_post.html', context)
 
-# def search(request):
+def search(request):
+    users = User.objects.all()
+    posts = Posts.objects.all()
+    search_key = request.GET.get('search_key')
+    if search_key:
+        users = User.objects.all().filter(Q(username__icontains = search_key))
+        posts = Posts.objects.all().filter(Q(description__icontains = search_key))
+    context = {
+        'users':users,
+        'posts':posts,
+    }
+    return render(request, 'results.html', context )
     

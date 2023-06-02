@@ -1,5 +1,5 @@
 from django.urls import path
-from apps.posts.views import index, create_post, post_detail, post_update, post_del
+from apps.posts.views import index, create_post, post_detail, post_update, post_del, search
 
 urlpatterns = [
     path("", index, name = "index"),
@@ -7,4 +7,5 @@ urlpatterns = [
     path("post_detail/<int:id>/", post_detail, name = "post_detail"),
     path("post_update/<int:id>/", post_update, name = "post_update"),
     path("post_del/<int:id>/", post_del, name = "post_del"),
+    path("search/", search, name = "search"),
 ]
