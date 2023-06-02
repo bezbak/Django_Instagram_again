@@ -1,9 +1,20 @@
 from django.shortcuts import render, redirect
 from apps.posts.models import Posts, Like, Comment
+from apps.users.models import User, Follow
 # Create your views here.
 
 def index(request):
     posts = Posts.objects.all().order_by('-created')
+    post = []
+    if request.user.is_authenticated:
+        follows = Follow.objects.all().filter(from_user = request.user)
+        for i in follows:
+            for j in Posts.objects.all().filter(post_user = i.to_user):
+                post.append(j)
+        if follows:
+            posts = post
+        else:
+            pass
     if request.method == "POST":
         post_id = request.POST.get('post_id')
         if request.user.is_authenticated:
@@ -79,3 +90,6 @@ def post_del(request, id):
         'post':post
     }
     return render(request, 'delete_post.html', context)
+
+# def search(request):
+    
