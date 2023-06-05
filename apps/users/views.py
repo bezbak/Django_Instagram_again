@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate, login
 from .models import User, Follow
+from apps.chat.models import Chat
 # Create your views here.
 
 def register(request):
@@ -33,13 +34,26 @@ def profile(request, username):
     user = User.objects.get(username = username)
     follow_status = Follow.objects.filter(from_user = request.user, to_user = user).exists()
     if request.method == "POST":
-        try:
-            follower = Follow.objects.get(from_user = request.user, to_user = user)
-            follower.delete()
-            return redirect('profile', user.username)
-        except:
-            follower = Follow.objects.create(from_user = request.user, to_user = user)
-            return redirect('profile', user.username)
+        if 'subscribe' in request.POST:
+            try:
+                follower = Follow.objects.get(from_user = request.user, to_user = user)
+                follower.delete()
+                return redirect('profile', user.username)
+            except:
+                follower = Follow.objects.create(from_user = request.user, to_user = user)
+                return redirect('profile', user.username)
+        if 'chat' in request.POST:
+            try:
+                try:
+                    chat = Chat.objects.get(from_user = request.user, to_user = user)
+                    return redirect('chats')
+                except:
+                    chat = Chat.objects.get(to_user = request.user, from_user = user)
+                    return redirect('chats')
+            except:
+                chat = Chat.objects.create(from_user = request.user, to_user = user)
+                return redirect('chats')
+                
     context = {
         'user':user,
         'follow_status':follow_status

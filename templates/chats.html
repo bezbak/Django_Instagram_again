@@ -1,0 +1,48 @@
+{% extends 'homepage.html' %}
+{% load static %}
+{% block content %}
+{% include 'includes/header.html' %}
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+    
+          <div class="row row-cols-1 row-cols-sm-12 row-cols-md-12 g-3">
+            {%for chat in chats%}
+              {%if chat.to_user == request.user%}
+              <div class="col ">
+                <div class="card shadow-sm d-flex colsen">
+                  <img class="bd-placeholder-img" width="50px" height="50px" src="{{chat.from_user.profile_image.url}}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"/>
+                  <div class="card-body">
+                    <h5 class="card-title">{{chat.from_user.username}}</h5>
+                    <p class="card-text">{{chat.from_user.description}}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <a type="button" class="btn btn-sm btn-outline-secondary">Чат</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {%else%}
+              <div class="col ">
+                <div class="card shadow-sm d-flex colsen">
+                  <img class="bd-placeholder-img" width="50px" height="50px" src="{{chat.to_user.profile_image.url}}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"/>
+                  <div class="card-body">
+                    <h5 class="card-title">{{chat.to_user.username}}</h5>
+                    <p class="card-text">{{chat.to_user.description}}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div class="btn-group">
+                        <a type="button" class="btn btn-sm btn-outline-secondary">Чат</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {%endif%}
+            {%endfor%}
+          </div>
+        </div>
+      </div>
+      {% include 'includes/footer.html' %}
+
+      {% endblock content %}

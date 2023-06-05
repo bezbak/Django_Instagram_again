@@ -24,10 +24,14 @@
                 <form method="POST">
                   {%csrf_token%}
                   {%if follow_status%}
-                    <button class="btn btn-outline-danger">Отписаться</button>
+                    <button name="subscribe" class="btn btn-outline-danger">Отписаться</button>
                   {%else%}
-                    <button class="btn btn-outline-primary">Подписаться</button>
+                    <button name="subscribe" class="btn btn-outline-primary">Подписаться</button>
                   {%endif%}
+                </form>
+                <form method="POST">
+                  {%csrf_token%}
+                    <button name="chat" class="btn btn-outline-success">Написать</button>
                 </form>
               {%endif%}
             </div>
