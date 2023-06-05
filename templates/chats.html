@@ -14,10 +14,10 @@
                   <img class="bd-placeholder-img" width="50px" height="50px" src="{{chat.from_user.profile_image.url}}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"/>
                   <div class="card-body">
                     <h5 class="card-title">{{chat.from_user.username}}</h5>
-                    <p class="card-text">{{chat.from_user.description}}</p>
+                    <p class="card-text">{{chat.messages.last.text}}</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
-                        <a type="button" class="btn btn-sm btn-outline-secondary">Чат</a>
+                        <a href="{%url 'chat_detail' chat.id%}" class="btn btn-sm btn-outline-secondary">Чат</a>
                       </div>
                     </div>
                   </div>
@@ -29,10 +29,10 @@
                   <img class="bd-placeholder-img" width="50px" height="50px" src="{{chat.to_user.profile_image.url}}" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"/>
                   <div class="card-body">
                     <h5 class="card-title">{{chat.to_user.username}}</h5>
-                    <p class="card-text">{{chat.to_user.description}}</p>
+                    <p class="card-text">{{chat.messages.last.text}}</p>
                     <div class="d-flex justify-content-between align-items-center">
                       <div class="btn-group">
-                        <a type="button" class="btn btn-sm btn-outline-secondary">Чат</a>
+                        <a href="{%url 'chat_detail' chat.id%}" class="btn btn-sm btn-outline-secondary">Чат</a>
                       </div>
                     </div>
                   </div>

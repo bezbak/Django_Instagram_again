@@ -1,0 +1,57 @@
+{%extends "homepage.html"%}
+{%load static%}
+{%block content%}
+{%include "includes/header.html"%}
+    
+      <div class=" simple_padding album py-5 bg-light">
+        <div class="container">
+    
+          <div style="display: flex; justify-content:center;" class="row row-cols-1 row-cols-sm-1 row-cols-md-1 g-3">
+            {%for message in chat.messages.all%}
+              {%if message.from_user == request.user%}
+                <div class="col-8" style="margin-left:50px;">
+                    <div class="card shadow-sm">
+                    <div class="flex_comm px-3" style="justify-content: end;">
+                        <p class="card-text " style=" margin: 15px 0;">{{message.text}}</p>
+                    </div>
+                    
+        
+                    <div class="card-body">
+                        <div class="d-flex justify-content-end align-items-center">
+                        <small class="text-muted">{{message.created|date:"M d, Y H:i"}}</small>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+              {%else%}
+              <div class="col-8" style="margin-right:50px;">
+                <div class="card shadow-sm">
+                <div class="flex_comm px-3">
+                    <p class="card-text " style=" margin: 15px 0;">{{message.text}}</p>
+                </div>
+                
+    
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                    <small class="text-muted">{{message.created|date:"M d, Y H:i"}}</small>
+                    </div>
+                </div>
+                </div>
+            </div>
+              {%endif%}
+            {%endfor%}
+            
+          </div>
+        </div>
+      </div>
+      <div class="comment  bg-light">
+        <div class="container">
+          <form method="POST" class="d-flex">
+            {%csrf_token%}
+            <textarea name="text" style="resize:none; height:100px;" class="form-control me-4" type="search" placeholder="Комментарий..." aria-label="Search"></textarea>
+            <button style="height: 50px;" class="btn btn-outline-success" type="submit">Ответить</button>
+        </form>
+      </div>
+    </div>
+    {%include "includes/footer.html"%}
+{%endblock%}
